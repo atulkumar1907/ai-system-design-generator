@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+/* Your custom ArchitectAI styles below */
+body {
+  background-color: #080810; /* Matching v2 UI spec [cite: 108] */
+  color: #eeeef5;
+  font-family: 'Epilogue', sans-serif;
+}

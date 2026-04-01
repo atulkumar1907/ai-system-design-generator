@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+.DS_Store
+
+# Environment Variables
+.env
+
+# Build Output
+dist/
+build/
+
+# IDE Settings
+.vscode/
+.idea/
