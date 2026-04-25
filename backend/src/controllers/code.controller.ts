@@ -1,8 +1,24 @@
-import { Router } from "express";
-import { compare } from "../controllers/compare.controller";
+import { Request, Response, NextFunction } from "express";
+import { generateCode } from "../services/code.service";
+import { successResponse } from "../utils/ApiResponse";
+import { ApiError } from "../utils/ApiError";
 
-const router = Router();
+export const generateCodeController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { language, architecturePattern } = req.body;
 
-router.post("/", compare);
+    if (!language || !architecturePattern) {
+      throw new ApiError(400, "VALIDATION_ERROR", "Missing fields");
+    }
 
-export default router;
+    const result = await generateCode(req.body);
+
+    res.json(successResponse(result));
+  } catch (error) {
+    next(error);
+  }
+};
