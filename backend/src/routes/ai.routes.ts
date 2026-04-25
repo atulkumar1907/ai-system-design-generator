@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { generate } from "../controllers/generate.controller";
+import { generate } from "../controllers/ai.controller";
 
 const router = Router();
 

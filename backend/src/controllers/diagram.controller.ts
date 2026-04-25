@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import * as service from "../services/diagram.service.js"; // Remember the .js extension for NodeNext
+import * as service from "../services/diagram.service"; // Remember the .js extension for NodeNext
 import { ApiError } from "../utils/ApiError";
 
 export const getDiagram = async (

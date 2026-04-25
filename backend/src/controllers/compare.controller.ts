@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { compareArchitectures } from "../services/compare.service";
-import { successResponse } from "../utils/apiResponse";
-import { ApiError } from "../utils/apiError";
+import { successResponse } from "../utils/ApiResponse";
+import { ApiError } from "../utils/ApiError";
 
 export const compare = async (req: Request, res: Response, next: NextFunction) => {
   try {

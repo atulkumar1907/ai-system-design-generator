@@ -5,4 +5,4 @@ const router = Router();
 
 router.get("/json/:diagramId", exportJsonController);
 
-export default router;a
+export default router;

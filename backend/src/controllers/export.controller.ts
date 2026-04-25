@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { exportJSON } from "../services/export.service";
-import { successResponse } from "../utils/apiResponse";
-import { ApiError } from "../utils/apiError";
+import { successResponse } from "../utils/ApiResponse";
+import { ApiError } from "../utils/ApiError";
 
 export const exportJsonController = async (
   req: Request,
@@ -13,7 +13,7 @@ export const exportJsonController = async (
       throw new ApiError(400, "VALIDATION_ERROR", "diagramId required");
     }
 
-    const result = await exportJSON(req.params.diagramId);
+    const result = await exportJSON(req.params.diagramId as string);
 
     res.json(successResponse(result));
   } catch (error) {
