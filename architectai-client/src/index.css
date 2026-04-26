@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -12,6 +13,11 @@ body {
 }
 
 @theme inline {
+  --font-syne: "Syne", sans-serif;
+  --color-bg-deep: #0a0a0f;
+  --color-surface: #111118;
+  --color-accent: #7b6cff;
+  --color-accent-soft: #a78bfa;
   --font-heading: var(--font-sans);
   --font-sans: 'Geist Variable', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
@@ -29,10 +35,7 @@ body {
   --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
-  --color-border: var(--border);
   --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -43,8 +46,11 @@ body {
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-foreground: var(--foreground);
-  --color-background: var(--background);
+  --color-background: #080810;
+  --color-foreground: #eeeef5;
+  --color-accent: #7b6cff; /* VIOLET-PURPLE */
+  --color-accent-foreground: #b9afff; /* Lighter violet */
+  --color-border: rgba(255, 255, 255, 0.06);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -55,7 +61,9 @@ body {
 }
 
 :root {
-  --background: oklch(1 0 0);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);

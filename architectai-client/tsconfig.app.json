@@ -8,6 +8,12 @@
     "types": ["vite/client"],
     "skipLibCheck": true,
 
+    "composite": true,
+    "baseUrl": ".", //
+    "paths": {
+      "@/*": ["./src/*"] // Maps @ to the src directory
+    },
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
