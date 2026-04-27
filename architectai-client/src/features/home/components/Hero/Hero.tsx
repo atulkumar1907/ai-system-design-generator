@@ -6,7 +6,7 @@ export const Hero = () => {
   return (
     <section className="hero">
       
-      {/* GRID */}
+      {/* GRID */} 
       <div className="hero-grid" />
 
       {/* ORB */}
@@ -44,7 +44,7 @@ export const Hero = () => {
           <div className="prompt-icon">⬡</div>
           <div>
             <div className="prompt-label">Live Prompt</div>
-            <div className="prompt-text">
+            <div className="prompt-text text-gray-400">
               Design a scalable Instagram-like feed service
               <span className="prompt-cursor" />
             </div>
