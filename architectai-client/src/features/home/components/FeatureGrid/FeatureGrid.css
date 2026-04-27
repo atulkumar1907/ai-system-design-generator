@@ -1,0 +1,45 @@
+@import "../../../../index.css";
+
+/* architectai-client/src/index.css */
+
+.features-container {
+  @apply py-20 px-6 bg-[#050507];
+}
+
+.features-grid {
+  @apply max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+}
+
+.feature-card {
+  @apply bg-[#0b0b12] border border-white/5 rounded-2xl p-8 transition-all duration-300;
+  @apply hover:border-white/10 hover:bg-[#11111a] hover:-translate-y-1;
+}
+
+.icon-container {
+  @apply w-12 h-12 rounded-xl flex items-center justify-center mb-6 border;
+}
+
+/* BRAND COLOR VARIANTS */
+.icon-purple {
+  @apply bg-purple-500/10 border-purple-500/20 text-purple-400;
+}
+
+.icon-green {
+  @apply bg-emerald-500/10 border-emerald-500/20 text-emerald-400;
+}
+
+.icon-blue {
+  @apply bg-blue-500/10 border-blue-500/20 text-blue-400;
+}
+
+.icon-orange {
+  @apply bg-orange-500/10 border-orange-500/20 text-orange-400;
+}
+
+.feature-title {
+  @apply text-white text-xl font-bold mb-4 tracking-tight;
+}
+
+.feature-description {
+  @apply text-white/50 text-sm leading-relaxed;
+}
