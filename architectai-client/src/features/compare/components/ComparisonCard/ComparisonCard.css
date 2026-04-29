@@ -1,0 +1,29 @@
+@reference "../../../../index.css";
+
+.comparison-card {
+  @apply bg-[#0f0f16] border border-white/5 rounded-2xl p-8 flex-1;
+}
+
+.card-header {
+  @apply flex justify-between items-start mb-10;
+}
+
+.metric-row {
+  @apply flex items-center gap-4 mb-5;
+}
+
+.metric-label {
+  @apply text-white/50 text-sm w-32;
+}
+
+.progress-container {
+  @apply flex-1 h-1.5 bg-white/5 rounded-full overflow-hidden;
+}
+
+.progress-bar {
+  @apply h-full rounded-full transition-all duration-500;
+}
+
+.metric-value {
+  @apply text-white/40 text-xs w-10 text-right font-mono;
+}

@@ -1,0 +1,78 @@
+@reference "../../index.css";
+
+.compare-page {
+  /* Ensure the page fits within the viewport minus navbar */
+  height: calc(100vh - 64px);
+  @apply bg-[#050507] overflow-y-auto px-10 py-12;
+}
+
+.compare-header {
+  @apply max-w-7xl mx-auto mb-12;
+}
+
+.compare-title {
+  @apply text-4xl font-extrabold text-white tracking-tight mb-2;
+}
+
+.compare-subtitle {
+  @apply text-white/40 text-lg font-light;
+}
+
+/* CONTROLS SECTION */
+.compare-controls {
+  @apply flex justify-between items-end mt-10;
+}
+
+.selector-group {
+  @apply flex items-center gap-4;
+}
+
+.arch-select {
+  @apply bg-[#111118] border border-white/10 text-white text-sm rounded-lg px-4 py-2.5 w-48;
+  @apply focus:border-brand-purple/50 focus:outline-none transition-all cursor-pointer;
+  /* Custom arrow styling if needed */
+}
+
+.vs-badge {
+  @apply px-3 py-1 bg-white/5 border border-white/10 rounded-md text-[10px] font-bold text-white/20 uppercase tracking-tighter;
+}
+
+.add-saved-btn {
+  @apply bg-brand-purple text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all;
+  @apply hover:bg-[#6d5dfc] hover:-translate-y-0.5 active:scale-95;
+}
+
+/* MAIN CONTENT GRID */
+.compare-content {
+  @apply max-w-7xl mx-auto;
+}
+
+.comparison-cards-grid {
+  @apply flex flex-col lg:flex-row gap-6 mb-12;
+}
+
+/* STATUS BADGES (Inside Comparison Cards) */
+.status-badge {
+  @apply px-3 py-1 rounded-full text-[11px] font-bold tracking-tight;
+}
+
+.status-badge.recommended {
+  @apply bg-emerald-500/10 border border-emerald-500/20 text-emerald-400;
+}
+
+.status-badge.low-ops {
+  @apply bg-blue-500/10 border border-blue-500/20 text-blue-400;
+}
+
+/* SCROLLBAR STYLING */
+.compare-page::-webkit-scrollbar {
+  @apply w-1.5;
+}
+
+.compare-page::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.compare-page::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full;
+}

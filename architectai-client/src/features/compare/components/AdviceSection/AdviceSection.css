@@ -1,0 +1,45 @@
+@reference "../../../../index.css";
+
+.advice-grid {
+  /* Aligns with ComparePage's max-width [cite: 47, 49] */
+  @apply grid grid-cols-1 lg:grid-cols-3 gap-6 mt-12;
+}
+
+.advice-card {
+  /* Matches the dark palette of the ArchitectAI editor [cite: 4, 73] */
+  @apply bg-[#0f0f16] border border-white/5 rounded-2xl p-8 transition-all;
+}
+
+.advice-title {
+  @apply flex items-center gap-2 font-bold mb-6 text-[15px] tracking-tight;
+}
+
+/* Variant Accents */
+.border-success { @apply border-emerald-500/20; }
+.text-success { @apply text-emerald-400; }
+
+.border-info { @apply border-blue-500/20; }
+.text-info { @apply text-blue-400; }
+
+.border-warning { @apply border-amber-500/20; }
+.text-warning { @apply text-amber-400; }
+
+/* List Styling */
+.advice-list {
+  @apply space-y-4;
+}
+
+.advice-item {
+  /* Custom marker '›' as seen in the screenshot */
+  @apply relative pl-4 text-white/50 text-[14px] leading-relaxed;
+}
+
+.advice-item::before {
+  content: '›';
+  @apply absolute left-0 text-white/20 font-mono text-lg leading-none top-0.5;
+}
+
+/* Hover effect for better interactivity */
+.advice-card:hover {
+  @apply border-white/10 bg-[#14141d];
+}
