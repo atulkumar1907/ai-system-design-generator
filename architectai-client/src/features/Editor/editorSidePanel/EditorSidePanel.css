@@ -2,38 +2,41 @@
 
 .editor-side-panel {
   /* Calculate max height: 100vh minus navbar height */
-  height: calc(100vh - 64px); 
+  height: calc(100vh - 63px); 
   @apply w-[320px] bg-[#0a0a0f] border-r border-white/10 flex flex-col overflow-hidden;
 }
 
 .panel-section {
-  @apply p-5 border-b border-white/5 flex flex-col;
+  @apply px-3 pb-4 border-b border-t border-white/5 flex flex-col;
 }
 
 .section-label {
-  @apply text-[10px] font-bold text-white/30 tracking-widest uppercase mb-4;
+  @apply text-[10px] font-bold text-white tracking-widest uppercase my-3;
 }
 
 /* Prompt Styles  */
 .prompt-textarea {
-  @apply w-full h-32 bg-[#14141d] border border-white/10 rounded-lg p-3 text-sm text-white/80 resize-none mb-4;
-  @apply focus:border-brand-purple/50 focus:outline-none transition-colors;
+  @apply w-full min-h-16! bg-[#14141d] border border-white/10 rounded-md p-3 text-xs text-white/80 resize-none mb-4;
+  /* @apply focus:border-brand-purple/50 focus:outline-none transition-colors; */
 }
 
 .generate-btn {
-  @apply w-full py-3 bg-[#7b6cff] text-white rounded-lg text-sm font-semibold flex items-center justify-center gap-2;
-  @apply hover:bg-[#6d5dfc] transition-colors shadow-[0_4px_12px_rgba(123,108,255,0.3)];
+  @apply w-full py-5 bg-[#7b6cff] text-white rounded-lg text-xs flex items-center justify-center gap-2;
+  @apply hover:bg-[#6d5dfc] transition-colors; 
+  /* shadow-[0_4px_12px_rgba(123,108,255,0.3)]; */
 }
 
 /* Palette Styles  */
 .palette-scroll-area {
-  @apply flex-1 overflow-y-auto pr-2;
+  @apply flex-1 overflow-y-auto;
+  padding-right: 12px;
+  margin-right: -2px; /* Hide native scrollbar space */
   scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,0.1) transparent;
 }
 
 .palette-item {
-  @apply flex items-center gap-3 p-3 mb-2 bg-white/[0.03] border border-white/[0.05] rounded-lg cursor-grab active:cursor-grabbing;
+  @apply flex items-center gap-3 px-3 py-2 mb-2 bg-white/[0.03] border border-white/[0.05] rounded-md cursor-grab active:cursor-grabbing;
   @apply hover:bg-white/[0.08] hover:border-white/10 transition-all;
 }
 
@@ -42,7 +45,7 @@
 }
 
 .item-label {
-  @apply text-sm text-white/70 font-medium;
+  @apply text-xs text-white font-medium;
 }
 
 /* Export Styles [cite: 58] */
