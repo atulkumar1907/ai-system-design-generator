@@ -3,7 +3,7 @@
 .editor-side-panel {
   /* Calculate max height: 100vh minus navbar height */
   height: calc(100vh - 63px); 
-  @apply w-[320px] bg-[#0a0a0f] border-r border-white/10 flex flex-col overflow-hidden;
+  @apply w-1/4 bg-[#0a0a0f] border-r border-white/10 flex flex-col overflow-hidden;
 }
 
 .panel-section {
