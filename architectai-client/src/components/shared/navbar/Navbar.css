@@ -48,3 +48,44 @@
   @apply text-white;
   background: rgba(255, 255, 255, 0.08);
 }
+
+/* HAMBURGER BUTTON */
+.hamburger {
+  @apply md:hidden flex flex-col gap-1.5 cursor-pointer z-50;
+}
+
+.line {
+  @apply w-6 h-[2px] bg-white transition-all duration-300;
+}
+
+/* Animate into X */
+.line.open:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.line.open:nth-child(2) {
+  opacity: 0;
+}
+.line.open:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* MOBILE MENU */
+.mobile-menu {
+  @apply md:hidden absolute top-full left-0 w-full flex flex-col items-center gap-4 py-6;
+  
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(12px);
+
+  transform: translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
+
+  transition: all 0.2s ease;
+}
+
+/* OPEN STATE */
+.mobile-menu.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
