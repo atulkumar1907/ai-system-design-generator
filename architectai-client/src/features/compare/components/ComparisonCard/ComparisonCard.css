@@ -1,19 +1,43 @@
 @reference "../../../../index.css";
 
 .comparison-card {
-  @apply bg-[#0f0f16] border border-white/5 rounded-2xl p-8 flex-1;
+  @apply bg-[#0f0f16] border border-white/5 rounded-2xl flex-1;
 }
 
 .card-header {
-  @apply flex justify-between items-start mb-10;
+  @apply flex flex-wrap justify-between items-start gap-3 py-4 px-5 border-b border-white/5;
+}
+
+.card-identity {
+  @apply flex items-start gap-2.5;
+}
+
+.card-title {
+  @apply font-semibold
+}
+
+.card-desc {
+  @apply text-xs text-[#9090A8];
+}
+
+.card-icon {
+  @apply bg-white/5 px-1.5 py-2 rounded-lg text-white;
+}
+
+.status-badge {
+  @apply text-[11px] px-[9px] py-[3px];
+}
+
+.metrics-list {
+  @apply py-4 px-5;
 }
 
 .metric-row {
-  @apply flex items-center gap-4 mb-5;
+  @apply flex items-center justify-between gap-3 py-[9px] border-b border-white/5;
 }
 
 .metric-label {
-  @apply text-white/50 text-sm w-32;
+  @apply text-white/50 text-xs w-fit;
 }
 
 .progress-container {

@@ -3,24 +3,24 @@
 .compare-page {
   /* Ensure the page fits within the viewport minus navbar */
   height: calc(100vh - 64px);
-  @apply bg-[#050507] overflow-y-auto px-10 py-12;
+  @apply bg-[#050507] overflow-y-auto px-8 py-4;
 }
 
 .compare-header {
-  @apply max-w-7xl mx-auto mb-12;
+  @apply max-w-5xl mx-auto mb-6;
 }
 
 .compare-title {
-  @apply text-4xl font-extrabold text-white tracking-tight mb-2;
+  @apply text-3xl font-syne font-bold text-white mb-2;
 }
 
 .compare-subtitle {
-  @apply text-white/40 text-lg font-light;
+  @apply text-[#9090A8] text-sm;
 }
 
 /* CONTROLS SECTION */
 .compare-controls {
-  @apply flex justify-between items-end mt-10;
+  @apply flex flex-wrap justify-between items-end gap-2 mt-8;
 }
 
 .selector-group {
@@ -28,27 +28,28 @@
 }
 
 .arch-select {
-  @apply bg-[#111118] border border-white/10 text-white text-sm rounded-lg px-4 py-2.5 w-48;
+  @apply bg-[#111118] border border-white/10 text-white text-sm rounded-md px-3.5 py-2 ;
   @apply focus:border-brand-purple/50 focus:outline-none transition-all cursor-pointer;
   /* Custom arrow styling if needed */
 }
 
 .vs-badge {
-  @apply px-3 py-1 bg-white/5 border border-white/10 rounded-md text-[10px] font-bold text-white/20 uppercase tracking-tighter;
+  @apply px-2.5 py-1 bg-white/5  rounded-lg text-[10px] font-bold text-white/20 uppercase tracking-tighter;
 }
 
 .add-saved-btn {
-  @apply bg-brand-purple text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all;
+  @apply bg-brand-purple text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all;
   @apply hover:bg-[#6d5dfc] hover:-translate-y-0.5 active:scale-95;
 }
 
 /* MAIN CONTENT GRID */
 .compare-content {
-  @apply max-w-7xl mx-auto;
+  @apply max-w-5xl mx-auto;
 }
 
 .comparison-cards-grid {
-  @apply flex flex-col lg:flex-row gap-6 mb-12;
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4
+  /* @apply flex flex-col md:flex-row gap-6 mb-12; */
 }
 
 /* STATUS BADGES (Inside Comparison Cards) */

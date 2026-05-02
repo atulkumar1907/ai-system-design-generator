@@ -16,7 +16,7 @@ const ComparisonCard = ({type, title, tag, tagType, metrics }) => {
     <div className="comparison-card">
       <div className="card-header">
         <div className="card-identity">
-          <div className="card-icon"><Hexagon size={18} /></div>
+          <div className={`card-icon ${tagType}`}><Hexagon size={18} /></div>
           <div>
             <h3 className="card-title">{title}</h3>
             <p className="card-desc">Independent deployable services</p>
