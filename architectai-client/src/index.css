@@ -9,7 +9,11 @@
 /* Your custom ArchitectAI styles below */
 body {
   color: #eeeef5;
-  font-family: 'Epilogue', sans-serif;
+  font-family: 'Syne', sans-serif;
+}
+
+.font-syne {
+  font-family: 'Syne', sans-serif;
 }
 
 @theme inline {
