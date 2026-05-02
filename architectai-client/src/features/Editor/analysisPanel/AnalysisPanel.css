@@ -7,11 +7,11 @@
 }
 
 .analysis-header {
-  @apply p-6 border-b border-white/5;
+  @apply p-[10px] border-b border-white/5;
 }
 
 .section-label {
-  @apply text-[10px] font-bold text-white/30 tracking-widest uppercase;
+  @apply text-[10px] p-0 m-0 mb-[10px] font-bold text-white/30 tracking-widest uppercase;
 }
 
 .analysis-scroll-content {
@@ -25,11 +25,12 @@
 }
 
 .analysis-title {
-  @apply text-white text-lg font-semibold;
+  @apply text-white text-[13px] font-semibold;
+  @apply font-syne
 }
 
 .analysis-text {
-  @apply text-white/60 text-[15px] leading-relaxed;
+  @apply text-white/60 text-[12.5px] leading-relaxed;
 }
 
 /* Tradeoff Tags */
@@ -38,7 +39,7 @@
 }
 
 .tradeoff-tag {
-  @apply px-3 py-1.5 rounded-full text-[13px] font-medium border;
+  @apply px-2.5 py-0.5 rounded-full text-[11px] font-medium border;
 }
 
 .tag-positive {
@@ -55,21 +56,29 @@
 
 /* Component List */
 .component-list {
-  @apply space-y-4;
+  @apply space-y-4; /* */
 }
 
 .component-list-item {
-  @apply flex items-start text-[14px] leading-snug;
+  /* Use items-start so bullet stays at the top of the first line */
+  @apply flex items-start text-[12.5px] leading-[1.4]; 
 }
 
 .comp-bullet {
-  @apply w-2 h-2 rounded-full mt-1.5 mr-3 shrink-0;
+  /* Match the 2x2 rounded style from your spec */
+  @apply w-2 h-2 rounded-full mt-[6px] mr-3 shrink-0;
+}
+
+.comp-text {
+  /* Ensures the name and description wrap as a single block */
+  @apply flex-1;
 }
 
 .comp-name {
-  @apply text-white font-medium;
+  @apply text-white font-semibold;
 }
 
 .comp-desc {
-  @apply text-white/40;
+  /* Using a slightly lighter opacity for better readability[cite: 1] */
+  @apply text-white/40 font-normal;
 }

@@ -57,9 +57,14 @@ const AnalysisPanel = () => {
           <ul className="component-list">
             {analysis.components.map((c, idx) => (
               <li key={idx} className="component-list-item">
-                <span className="comp-bullet" style={{ backgroundColor: c.color }} />
-                <span className="comp-name">{c.name} — </span>
-                <span className="comp-desc">{c.desc}</span>
+                {/* The bullet remains separate for alignment */}
+                <span className="comp-bullet" style={{ backgroundColor: c.color }}></span>
+
+                {/* Wrap name and desc in one tag so they wrap together */}
+                <p className="comp-text">
+                  <span className="comp-name">{c.name} — </span>
+                  <span className="comp-desc">{c.desc}</span>
+                </p>
               </li>
             ))}
           </ul>
