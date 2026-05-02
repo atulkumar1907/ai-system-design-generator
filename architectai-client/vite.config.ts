@@ -13,7 +13,14 @@ export default defineConfig({
   },
   server: {
     watch: {
-      usePolling: true, // Add this line
+      usePolling: true,
+      interval: 100, 
     },
-  } 
+    // This ensures the HMR websocket connects correctly
+    hmr: {
+      overlay: true, 
+    },
+    // Force Vite to check for changes more aggressively
+    strictPort: true, 
+  }
 })
