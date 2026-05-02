@@ -7,7 +7,7 @@
 }
 
 .panel-section {
-  @apply px-3 pb-4 border-b border-t border-white/5 flex flex-col;
+  @apply px-3 p-4 border-b border-t border-white/5 flex flex-col;
 }
 
 .section-label {
