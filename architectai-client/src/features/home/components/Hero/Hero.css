@@ -1,19 +1,31 @@
-@reference "./index.css";
+@reference "../../../../index.css";
 
 .hero {
   @apply relative min-h-screen flex items-center justify-center overflow-hidden text-center px-6;
-  /* Complex Radial + Linear Background */
-  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(123, 108, 255, 0.25), transparent 60%),
-              linear-gradient(to bottom, #080810, #0a0a12, #050507);
+
+  background:
+    radial-gradient(circle at 50% 30%, rgba(123,108,255,0.18), transparent 55%),
+    linear-gradient(to bottom, #06060d, #0a0a14, #050507);
 }
 
 .hero-grid {
   @apply absolute inset-0 pointer-events-none;
-  /* Grid lines + Radial Mask */
-  background-image: linear-gradient(rgba(123,108,255,0.04) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(123,108,255,0.04) 1px, transparent 1px);
+
+  background-image:
+    linear-gradient(rgba(123,108,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,108,255,0.06) 1px, transparent 1px);
+
   background-size: 40px 40px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black, transparent);
+
+  mask-image: radial-gradient(circle at 50% 50%, black 60%, transparent 100%);
+}
+
+.hero::before {
+  content: "";
+  @apply absolute inset-0;
+
+  background: radial-gradient(circle at 50% 20%, rgba(123,108,255,0.12), transparent 60%);
+  pointer-events: none;
 }
 
 .hero-orb {

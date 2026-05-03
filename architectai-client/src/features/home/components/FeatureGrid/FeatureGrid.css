@@ -7,16 +7,16 @@
 }
 
 .features-grid {
-  @apply max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+  @apply max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
 }
 
 .feature-card {
-  @apply bg-[#0b0b12] border border-white/5 rounded-2xl p-8 transition-all duration-300;
+  @apply bg-[#0b0b12] border border-white/5 rounded-2xl p-5 transition-all duration-300;
   @apply hover:border-white/10 hover:bg-[#11111a] hover:-translate-y-1;
 }
 
 .icon-container {
-  @apply w-12 h-12 rounded-xl flex items-center justify-center mb-6 border;
+  @apply w-10 h-10 rounded-xl flex items-center justify-center mb-6 border;
 }
 
 /* BRAND COLOR VARIANTS */
@@ -37,9 +37,9 @@
 }
 
 .feature-title {
-  @apply text-white text-xl font-bold mb-4 tracking-tight;
+  @apply text-white text-base font-bold mb-2 tracking-tight;
 }
 
 .feature-description {
-  @apply text-white/50 text-sm leading-relaxed;
+  @apply text-white/50 text-xs leading-relaxed;
 }

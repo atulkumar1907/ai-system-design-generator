@@ -1,8 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import "./hero.css";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
+
+
+  const navigate = useNavigate();
+
+  
   return (
     <section className="hero">
       
@@ -31,7 +37,7 @@ export const Hero = () => {
         </p>
 
         <div className="hero-cta">
-          <Button className="btn-primary">
+          <Button className="btn-primary" onClick={()=> navigate("/generate")}>
             ⬡ Generate architecture
           </Button>
           <Button variant="outline" className="btn-secondary">
