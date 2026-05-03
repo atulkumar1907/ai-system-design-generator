@@ -1,0 +1,54 @@
+@import "../../../index.css";
+
+.design-card {
+  @apply relative border border-gray-800 rounded-2xl overflow-hidden bg-gradient-to-b from-[#0f0f16] to-black hover:border-brand-purple/50 transition-all duration-300 cursor-pointer;
+}
+
+.preview {
+  /* Relative positioning is required for the absolute nodes inside */
+  @apply relative h-40 bg-[#08080c] overflow-hidden;
+  /* Subtle dot grid background for the "canvas" feel */
+  background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.node {
+  /* Using 12.5px leading to match system design requirements */
+  @apply text-[12px] font-mono px-3 py-1.5 border border-white/10 rounded-md text-white/40 bg-[#111118]/90 backdrop-blur-md whitespace-nowrap shadow-xl;
+  @apply transition-transform hover:scale-110 hover:text-white hover:border-brand-purple/40;
+}
+
+.content {
+  @apply py-4 px-5 bg-[#0c0c12] border-t border-white/5;
+}
+
+.title-text {
+  @apply text-[15px] font-bold text-white mb-2 tracking-tight;
+}
+
+.meta {
+  @apply flex items-center gap-3 mb-5;
+}
+
+.type {
+  @apply text-[11px] font-bold uppercase tracking-wider text-brand-purple;
+}
+
+.type.monolith { @apply text-amber-500; }
+.type.event-driven { @apply text-emerald-500; }
+
+.date {
+  @apply text-[11px] text-white/20 font-medium;
+}
+
+.actions {
+  @apply flex gap-2;
+}
+
+.action-btn {
+  @apply w-8 h-8 flex items-center justify-center border border-white/5 rounded-lg text-xs text-white/30 hover:text-white hover:bg-white/5 transition-all;
+}
+
+.delete {
+  @apply flex items-center justify-center absolute right-4 bottom-4 w-9 h-9 border border-white/5 rounded-lg text-white/20 hover:text-red-400 hover:bg-red-400/5 hover:border-red-400/20 transition-all;
+}

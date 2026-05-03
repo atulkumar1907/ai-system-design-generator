@@ -1,0 +1,45 @@
+@import "../../index.css";
+
+
+.saved-container {
+  @apply max-w-6xl mx-auto px-6 py-10 text-gray-200;
+}
+
+/* HEADER */
+.header {
+  @apply flex justify-between items-center mb-6;
+}
+
+.header h1 {
+  @apply text-3xl font-bold;
+}
+.header p {
+  @apply text-sm text-gray-400 mt-1;
+}
+
+.new-btn {
+  @apply bg-purple-500 hover:bg-purple-600 text-[13px] text-white px-3.5 py-1.5 rounded-md font-medium transition;
+}
+
+/* FILTERS */
+.filters {
+  @apply flex flex-wrap gap-3 mb-8;
+}
+
+/* GRID */
+.grid {
+  @apply grid grid-cols-3 gap-4;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .grid {
+    @apply grid-cols-2;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    @apply grid-cols-1;
+  }
+}
