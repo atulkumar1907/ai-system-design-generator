@@ -1,4 +1,4 @@
-@reference "../../../index.css";
+@import "../../../../index.css";
 
 .code-sidebar {
   /* Calculate full height minus navbar height */
