@@ -1,0 +1,18 @@
+@import "../../../../index.css";
+
+/* CHIPS */
+.chips {
+  @apply flex flex-wrap gap-4;
+}
+
+.chip {
+  @apply px-3 py-1 rounded-full border border-gray-700 text-gray-400 cursor-pointer text-xs transition;
+}
+
+.chip:hover {
+  @apply border-purple-500 text-gray-200;
+}
+
+.chip.active {
+  @apply border-purple-500 bg-purple-500/20 text-white;
+}

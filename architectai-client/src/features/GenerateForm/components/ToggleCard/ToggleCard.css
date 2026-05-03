@@ -1,0 +1,24 @@
+@import "../../../../index.css";
+
+.toggle-card {  
+  @apply border border-gray-700 rounded-xl p-4 cursor-pointer transition duration-200;
+}
+
+.toggle-card:hover {
+  @apply border-purple-500;
+
+  transform: translateY(-2px);
+}
+
+.toggle-card.active {
+  @apply border-purple-500 bg-purple-500/10;
+}
+
+.toggle-card h3 {
+  @apply mb-1 text-sm font-medium;
+
+}
+
+.toggle-card p {
+  @apply text-xs text-gray-400;
+}
