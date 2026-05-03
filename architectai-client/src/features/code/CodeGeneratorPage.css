@@ -1,0 +1,49 @@
+@reference "../../index.css";
+
+.code-gen-layout {
+  height: calc(100vh - 64px); /* Full height minus Navbar */
+  @apply flex bg-[#050507] overflow-hidden;
+}
+
+/* MAIN CONTENT AREA */
+.code-gen-main {
+  @apply flex-1 flex flex-col min-w-0; /* min-w-0 prevents flex items from overflowing */
+}
+
+.code-gen-header {
+  @apply p-10 pb-6 flex justify-between items-start;
+}
+
+.header-text h1 {
+  @apply text-4xl font-extrabold text-white tracking-tight mb-2;
+}
+
+.header-text p {
+  @apply text-white/40 text-lg;
+}
+
+/* SCROLLABLE CODE VIEW */
+.code-gen-scroller {
+  @apply flex-1 overflow-y-auto px-10 pb-10;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+/* MOBILE RESPONSIVENESS */
+.mobile-toggle {
+  @apply hidden lg:hidden p-2 text-white/60 hover:text-white;
+}
+
+@media (max-width: 1024px) {
+  .mobile-toggle {
+    @apply block;
+  }
+  
+  .code-gen-header {
+    @apply p-6;
+  }
+  
+  .header-text h1 {
+    @apply text-2xl;
+  }
+}

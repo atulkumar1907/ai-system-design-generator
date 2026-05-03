@@ -1,0 +1,31 @@
+@import "../../../../index.css";
+
+/* Viewport.css */
+.code-viewport {
+  @apply flex-1 flex flex-col gap-6 overflow-y-auto pr-4;
+}
+
+.editor-window {
+  @apply bg-[#0d0d14] border border-white/5 rounded-2xl overflow-hidden;
+}
+
+.editor-header {
+  @apply bg-black/20 px-6 py-3 flex justify-between items-center border-b border-white/5;
+}
+
+.window-dots { @apply flex gap-1.5; }
+.window-dots span { @apply w-2.5 h-2.5 rounded-full bg-white/10; }
+.window-dots span:nth-child(1) { @apply bg-[#ff5f56]; }
+.window-dots span:nth-child(2) { @apply bg-[#ffbd2e]; }
+.window-dots span:nth-child(3) { @apply bg-[#27c93f]; }
+
+.file-path { @apply text-[11px] font-mono text-white/30; }
+
+.code-block {
+  @apply p-8 text-[13px] font-mono leading-relaxed overflow-x-auto;
+}
+
+.keyword { @apply text-[#c678dd]; }
+.string { @apply text-[#98c379]; }
+.type { @apply text-[#e5c07b]; }
+.comment { @apply text-white/20; }
