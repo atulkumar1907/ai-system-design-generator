@@ -1,11 +1,11 @@
 @import "../../../../index.css";
 
 .section-title {
-  @apply mb-5;
+  @apply mb-2.5;
 }
 
 .section-title h2 {
-  @apply text-xs font-bold text-gray-400 uppercase tracking-wide;
+  @apply text-[11px] font-semibold text-gray-400 uppercase;
 }
 
 .section-title p {

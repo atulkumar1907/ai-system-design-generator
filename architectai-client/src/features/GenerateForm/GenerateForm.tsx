@@ -1,48 +1,123 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Hexagon, ChevronLeft } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { SectionTitle } from "./components/SectionTitle/SectionTitle";
 import { ToggleCard } from "./components/ToggleCard/ToggleCard";
 import "./GenerateForm.css";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+const ARCHITECTURE_OPTIONS = [
+  "Microservices",
+  "Monolith",
+  "Serverless",
+  "Event-driven",
+] as const;
+
+const SCALE_OPTIONS = [
+  { value: "low",        label: "Low (<10k users)" },
+  { value: "medium",     label: "Medium (10k-1M users)" },
+  { value: "high",       label: "High (1M-100M users)" },
+  { value: "hyperscale", label: "Hyper-scale (100M+)" },
+] as const;
+
+const SPECIAL_REQUIREMENTS_OPTIONS = [
+  "Authentication / Auth",
+  "Real-time (WebSocket)",
+  "Caching layer",
+  "CDN / Media delivery",
+  "Message queue",
+  "Search engine",
+  "ML / Recommendation",
+  "Geo-distribution",
+  "CI/CD pipeline",
+] as const;
+
+// ─── Zod Schema ───────────────────────────────────────────────────────────────
+
+const generateFormSchema = z.object({
+  description: z
+    .string()
+    .min(1, "System description is required")
+    .min(10, "Description must be at least 10 characters"),
+
+  architecturePatterns: z
+    .array(z.enum(ARCHITECTURE_OPTIONS))
+    .min(1, "Select at least one architecture pattern"),
+
+  scale: z.string().default("medium"),
+
+  specialRequirements: z
+    .array(z.enum(SPECIAL_REQUIREMENTS_OPTIONS))
+    .optional()
+    .default([]),
+
+  dbPreference: z.string().default("no-preference"),
+
+  cloudProvider: z.string().default("aws"),
+
+  notes: z.string().optional(),
+});
+
+type GenerateFormValues = z.output<typeof generateFormSchema>;
+
+// ─── Sub-data ─────────────────────────────────────────────────────────────────
+
+const architectureOptions: {
+  title: (typeof ARCHITECTURE_OPTIONS)[number];
+  desc: string;
+}[] = [
+  { title: "Microservices", desc: "Independent deployable services" },
+  { title: "Monolith",      desc: "Single deployable unit" },
+  { title: "Serverless",    desc: "Function-as-a-service" },
+  { title: "Event-driven",  desc: "Async message passing" },
+];
+
+// ─── Component ────────────────────────────────────────────────────────────────
 
 export const GenerateForm = () => {
-  const [description, setDescription] = useState("");
-  const [selectedPatterns, setSelectedPatterns] = useState<string[]>([]);
-  const [selectedScale, setSelectedScale] = useState("medium");
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
-  const [dbPreference, setDbPreference] = useState("no-preference");
-  const [cloud, setCloud] = useState("agnostic");
-  const [notes, setNotes] = useState("");
+  const form = useForm<GenerateFormValues, unknown, GenerateFormValues>({
+    resolver: zodResolver(generateFormSchema) as any,
+    defaultValues: {
+      description: "",
+      architecturePatterns: [],
+      scale: "",
+      specialRequirements:[] as (typeof SPECIAL_REQUIREMENTS_OPTIONS)[number][],
+      dbPreference: "no-preference",
+      cloudProvider: "aws",
+      notes: "",
+    },
+  });
 
-  const toggleItem = (item: string, list: string[], setList: React.Dispatch<React.SetStateAction<string[]>>) => {
-    setList(list.includes(item) ? list.filter((i) => i !== item) : [...list, item]);
-  };
-
-  const handleSubmit = () => {
-    if (!description.trim()) return alert("System description is required"); //
-    if (selectedPatterns.length === 0) return alert("Select at least one pattern"); //
-
+  const onSubmit = (values: GenerateFormValues) => {
     const payload = {
-      prompt: description,
-      architectureTypes: selectedPatterns.map(p => p.toLowerCase()), //
-      scale: selectedScale,
-      requirements: selectedFeatures,
-      dbPreference,
-      cloudProvider: cloud,
-      constraints: notes,
+      prompt: values.description,
+      architectureTypes: values.architecturePatterns.map((p) => p.toLowerCase()),
+      scale: values.scale,
+      specialRequirements: values.specialRequirements,
+      dbPreference: values.dbPreference,
+      cloudProvider: values.cloudProvider,
+      constraints: values.notes ?? "",
     };
-
-    console.log("🚀 Payload for /api/v1/generate:", payload); //
+    console.log("🚀 Payload for /api/v1/generate:", payload);
   };
-
-  const architectureOptions = [
-    { title: "Microservices", desc: "Independent deployable services" },
-    { title: "Monolith", desc: "Single deployable unit" },
-    { title: "Serverless", desc: "Function-as-a-service" },
-    { title: "Event-driven", desc: "Async message passing" },
-  ];
 
   return (
     <div className="generate-container">
@@ -53,94 +128,239 @@ export const GenerateForm = () => {
       <header className="form-header">
         <h1 className="title">Generate architecture</h1>
         <p className="subtitle">
-          Fill in the details below. We'll generate selected patterns and
-          compare them side by side with interactive diagrams.
+          Fill in the details below. We'll generate selected patterns and compare
+          them side by side with interactive diagrams.
         </p>
       </header>
 
-      <div className="form-sections-wrapper">
-        <div className="form-group">
-          <SectionTitle title="System Description *" />
-          <Textarea
-            className="notes-textarea"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="e.g. Design a scalable video streaming platform like YouTube..."
-          />
-        </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="form-sections-wrapper">
 
-        <div className="form-group">
-          <SectionTitle title="Architecture patterns to generate" />
-          <div className="card-grid">
-            {architectureOptions.map((item) => (
-              <ToggleCard
-                key={item.title}
-                title={item.title}
-                description={item.desc}
-                active={selectedPatterns.includes(item.title)}
-                onClick={() => toggleItem(item.title, selectedPatterns, setSelectedPatterns)}
+            {/* ── System Description ── */}
+            <div className="form-group">
+              <SectionTitle title="System Description *" />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        className="notes-textarea resize-none"
+                        placeholder="e.g. Design a scalable video streaming platform like YouTube..."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            ))}
-          </div>
-        </div>
-
-        <div className="form-group">
-          <SectionTitle title="ADDITIONAL CONTEXT (OPTIONAL)" />
-          <div className="form-row">
-            {/* First 50% Column[cite: 1] */}
-            <div className="form-field">
-              <label className="field-label">PRIMARY DATABASE PREFERENCE</label>
-              <Select modal={false}>
-                <SelectTrigger className="form-select-trigger">
-                  <SelectValue placeholder="No preference" />
-                </SelectTrigger>
-                <SelectContent position="popper" className="select-dropdown-content">
-                  <SelectItem value="no-preference" className="select-item">No preference</SelectItem>
-                  <SelectItem value="postgresql" className="select-item">SQL (PostgreSQL, MySQL)</SelectItem>
-                  <SelectItem value="mongodb" className="select-item">NoSQL (MongoDB, Cassandra)</SelectItem>
-                  <SelectItem value="dynamodb" className="select-item">DynamoDB</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
 
-            {/* Second 50% Column[cite: 1] */}
-            <div className="form-field">
-              <label className="field-label">CLOUD PROVIDER</label>
-              <Select modal={false}>
-                <SelectTrigger className="form-select-trigger">
-                  <SelectValue placeholder="Cloud agnostic" />
-                </SelectTrigger>
-                <SelectContent position="popper" className="select-dropdown-content">
-                  <SelectItem value="no-preference" className="select-item">No preference</SelectItem>
-                  <SelectItem value="postgresql" className="select-item">SQL (PostgreSQL, MySQL)</SelectItem>
-                  <SelectItem value="mongodb" className="select-item">NoSQL (MongoDB, Cassandra)</SelectItem>
-                  <SelectItem value="dynamodb" className="select-item">DynamoDB</SelectItem>
-                </SelectContent>
-              </Select>
+            {/* ── Architecture Patterns ── */}
+            <div className="form-group">
+              <SectionTitle title="Architecture patterns to generate" />
+              <FormField
+                control={form.control}
+                name="architecturePatterns"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="card-grid">
+                        {architectureOptions.map((item) => {
+                          const isActive = field.value.includes(item.title);
+                          const toggle = () => {
+                            const next = isActive
+                              ? field.value.filter((v) => v !== item.title)
+                              : [...field.value, item.title];
+                            field.onChange(next);
+                          };
+                          return (
+                            <ToggleCard
+                              key={item.title}
+                              title={item.title}
+                              description={item.desc}
+                              active={isActive}
+                              onClick={toggle}
+                            />
+                          );
+                        })}
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
+
+            {/* ── Scale Requirements ── */}
+            <div className="form-group">
+              <SectionTitle title="Scale Requirements" />
+              <FormField
+                control={form.control}
+                name="scale"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="scale-options">
+                        {SCALE_OPTIONS.map((option) => (
+                          <button
+                            key={option.value}
+                            type="button"
+                            className={`scale-pill ${field.value === option.value ? "scale-pill--active" : ""}`}
+                            onClick={() => field.onChange(option.value)}
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* ── Special Requirements ── */}
+            <div className="form-group">
+              <SectionTitle title="Special Requirements" />
+              <FormField
+                control={form.control}
+                name="specialRequirements"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="pills-wrap">
+                        {SPECIAL_REQUIREMENTS_OPTIONS.map((req) => {
+                          const isActive = field.value.includes(req);
+                          const toggle = () => {
+                            const next = isActive
+                              ? field.value.filter((v) => v !== req)
+                              : [...field.value, req];
+                            field.onChange(next);
+                          };
+                          return (
+                            <button
+                              key={req}
+                              type="button"
+                              className={`req-pill ${isActive ? "req-pill--active" : ""}`}
+                              onClick={toggle}
+                            >
+                              {req}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* ── Additional Context ── */}
+            <div className="form-group">
+              <SectionTitle title="ADDITIONAL CONTEXT (OPTIONAL)" />
+              <div className="form-row">
+
+                {/* DB Preference */}
+                <div className="form-field">
+                  <FormField
+                    control={form.control}
+                    name="dbPreference"
+                    render={({ field }) => (
+                      <FormItem>
+                        <label className="field-label">PRIMARY DATABASE PREFERENCE</label>
+                        <Select modal={false} value={field.value} onValueChange={field.onChange}>
+                          <FormControl>
+                            <SelectTrigger className="form-select-trigger">
+                              <SelectValue placeholder="No preference" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent position="popper" className="select-dropdown-content">
+                            <SelectItem value="no-preference" className="select-item">No preference</SelectItem>
+                            <SelectItem value="postgresql"    className="select-item">SQL (PostgreSQL, MySQL)</SelectItem>
+                            <SelectItem value="mongodb"       className="select-item">NoSQL (MongoDB, Cassandra)</SelectItem>
+                            <SelectItem value="dynamodb"      className="select-item">DynamoDB</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Cloud Provider */}
+                <div className="form-field">
+                  <FormField
+                    control={form.control}
+                    name="cloudProvider"
+                    render={({ field }) => (
+                      <FormItem>
+                        <label className="field-label">CLOUD PROVIDER</label>
+                        <Select modal={false} value={field.value} onValueChange={field.onChange}>
+                          <FormControl>
+                            <SelectTrigger className="form-select-trigger">
+                              <SelectValue placeholder="Cloud agnostic" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent position="popper" className="select-dropdown-content">
+                            <SelectItem value="cloud-agnostic" className="select-item">Cloud agnostic</SelectItem>
+                            <SelectItem value="aws"            className="select-item">AWS</SelectItem>
+                            <SelectItem value="gcp"            className="select-item">GCP</SelectItem>
+                            <SelectItem value="azure"          className="select-item">Azure</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+              </div>
+            </div>
+
+            {/* ── Notes ── */}
+            <div className="form-group">
+              <SectionTitle title="CONSTRAINTS OR NOTES (OPTIONAL)" />
+              <FormField
+                control={form.control}
+                name="notes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        className="notes-textarea resize-none"
+                        placeholder="e.g. Must support offline mode, HIPAA compliant..."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
           </div>
-        </div>
 
-        <div className="form-group">
-          <SectionTitle title="CONSTRAINTS OR NOTES (OPTIONAL)" />
-          <Textarea
-            className="notes-textarea"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="e.g. Must support offline mode, HIPAA compliant..."
-          />
-        </div>
-      </div>
-
-      <div className="actions-footer">
-        <Button className="btn-primary-glow" onClick={handleSubmit}>
-          <Hexagon size={16} className="mr-2" />
-          Generate all architectures
-        </Button>
-        <Button variant="ghost" className="btn-secondary-dark" onClick={() => window.location.reload()}>
-          Cancel
-        </Button>
-      </div>
+          {/* ── Footer Actions ── */}
+          <div className="actions-footer">
+            <Button type="submit" className="btn-primary-glow">
+              <Hexagon size={16} className="mr-2" />
+              Generate all architectures
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              className="btn-secondary-dark"
+              onClick={() => window.location.reload()}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };

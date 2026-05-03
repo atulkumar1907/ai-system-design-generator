@@ -5,27 +5,27 @@
 }
 
 .back-btn {
-  @apply flex items-center gap-2 text-white/40 text-sm mb-8 hover:text-white transition-colors cursor-pointer;
+  @apply flex items-center gap-2 text-white/40 text-[13px] mb-8 hover:text-white transition-colors cursor-pointer;
 }
 
 .form-header {
-  @apply mb-12;
+  @apply mb-9;
 }
 
 .title {
-  @apply text-4xl font-extrabold text-white mb-3 tracking-tight;
+  @apply text-[26px] font-bold text-white mb-1.5 tracking-tight;
 }
 
 .subtitle {
-  @apply text-white/40 text-base max-w-[640px] leading-relaxed;
+  @apply text-gray-500 text-base max-w-[640px] leading-relaxed;
 }
 
 .form-sections-wrapper {
-  @apply space-y-10;
+  @apply space-y-8;
 }
 
 .form-group {
-  @apply flex flex-col gap-4;
+  @apply flex flex-col;
 }
 
 /* Labels and Fields */
@@ -44,33 +44,30 @@
 
 /* Inputs */
 .notes-textarea {
-  @apply bg-[#111118] border-white/10 rounded-2xl min-h-[120px] p-5 text-white/70 text-sm leading-relaxed;
+  @apply bg-[#111118] border-white/10 rounded-2xl min-h-[120px] p-5 text-gray-500 text-sm leading-relaxed;
   @apply focus-visible:ring-brand-purple/40 focus-visible:border-brand-purple/50 transition-all;
+  @apply resize-none
 }
 
 /* Card Grid for Patterns */
 .card-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  @apply grid grid-cols-2 sm:grid-cols-4 gap-4;
 }
 
 /* Action Buttons */
 .actions-footer {
-  @apply flex items-center gap-4 mt-16 pt-10 border-t border-white/5;
+  @apply flex items-center gap-4 mt-9 pt-6 border-t border-white/5;
 }
 
 .btn-primary-glow {
-  @apply h-14 bg-[#7b6cff] text-white rounded-xl font-bold px-8 transition-all;
-  box-shadow: 0 0 20px rgba(123, 108, 255, 0.5);
+  @apply h-11 text-[15px] bg-[#7b6cff] text-white rounded-xl font-bold px-6.5 py-3 transition-all;
+  /* box-shadow: 0 0 20px rgba(123, 108, 255, 0.5); */
 
   @apply hover:-translate-y-0.5;
 }
 
-.btn-primary-glow:hover {
-  box-shadow: 0 0 30px rgba(123, 108, 255, 0.6)
-}
-
 .btn-secondary-dark {
-  @apply h-14 bg-white/[0.03] border border-white/10 text-white/60 rounded-xl font-bold px-10 transition-all;
+  @apply h-11 bg-white/[0.03] border border-white/10 text-white/60 rounded-xl font-bold px-6.5 py-3 transition-all;
   @apply hover:bg-white/[0.08] hover:text-white;
 }
 
@@ -95,4 +92,32 @@
   /* Ensures the trigger fills the 50% width of the form-field[cite: 1] */
   @apply w-full bg-[#111118] border-white/10 rounded-xl h-12 text-white/70 px-4 transition-all;
   @apply focus:ring-brand-purple/40 focus:border-brand-purple/50;
+}
+
+/* ── Scale Pills ── */
+.scale-options {
+  @apply flex flex-wrap gap-2 mt-2;
+}
+
+.scale-pill {
+  @apply px-4 py-2 rounded-full text-sm text-white/50 border border-white/10 bg-transparent
+         transition-all cursor-pointer hover:border-white/30 hover:text-white/80;
+}
+
+.scale-pill--active {
+  @apply border-brand-purple text-white bg-brand-purple/10;
+}
+
+/* ── Special Requirement Pills ── */
+.pills-wrap {
+  @apply flex flex-wrap gap-2 mt-2;
+}
+
+.req-pill {
+  @apply px-4 py-2 rounded-full text-sm text-white/50 border border-white/10 bg-transparent
+         transition-all cursor-pointer hover:border-white/30 hover:text-white/80;
+}
+
+.req-pill--active {
+  @apply border-brand-purple text-white bg-brand-purple/10;
 }
