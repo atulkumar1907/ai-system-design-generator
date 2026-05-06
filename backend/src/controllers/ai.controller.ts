@@ -6,7 +6,15 @@ import { v4 as uuid } from "uuid";
 
 export const generate = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { prompt, architectureTypes } = req.body;
+    const {
+      prompt,
+      architectureTypes,
+      scale,
+      requirements,
+      dbPreference,
+      cloudProvider,
+      constraints
+    } = req.body;
 
     if (!prompt || !architectureTypes) {
       throw new ApiError(400, "VALIDATION_ERROR", "Missing required fields");
@@ -19,6 +27,15 @@ export const generate = async (req: Request, res: Response, next: NextFunction) 
         sessionId: uuid(),
         prompt,
         generatedAt: new Date().toISOString(),
+        request: {
+          prompt,
+          architectureTypes,
+          scale,
+          requirements,
+          dbPreference,
+          cloudProvider,
+          constraints,
+        },
         architectures,
       })
     );

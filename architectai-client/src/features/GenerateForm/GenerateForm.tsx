@@ -21,6 +21,10 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { useGenerateArchitectureMutation } from "@/store/api/generateApi";
+import { useNavigate } from "react-router-dom";
+import { GenerateSliceManager } from "@/store/sliceManager/generateSliceManager";
+
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -93,31 +97,61 @@ const architectureOptions: {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export const GenerateForm = () => {
+
+  const navigate = useNavigate();;
+  const [generateArchitecture, { isLoading, error }] = useGenerateArchitectureMutation();
+
   const form = useForm<GenerateFormValues, unknown, GenerateFormValues>({
     resolver: zodResolver(generateFormSchema) as any,
     defaultValues: {
       description: "",
       architecturePatterns: [],
       scale: "",
-      specialRequirements:[] as (typeof SPECIAL_REQUIREMENTS_OPTIONS)[number][],
+      specialRequirements: [] as (typeof SPECIAL_REQUIREMENTS_OPTIONS)[number][],
       dbPreference: "no-preference",
       cloudProvider: "aws",
       notes: "",
     },
   });
 
-  const onSubmit = (values: GenerateFormValues) => {
-    const payload = {
-      prompt: values.description,
-      architectureTypes: values.architecturePatterns.map((p) => p.toLowerCase()),
-      scale: values.scale,
-      specialRequirements: values.specialRequirements,
-      dbPreference: values.dbPreference,
-      cloudProvider: values.cloudProvider,
-      constraints: values.notes ?? "",
-    };
-    console.log("🚀 Payload for /api/v1/generate:", payload);
+const onSubmit = async (values: GenerateFormValues) => {
+  const payload = {
+    prompt: values.description,
+    architectureTypes: values.architecturePatterns.map((p) => p.toLowerCase()),
+    scale: values.scale,
+    specialRequirements: values.specialRequirements ?? [],
+    dbPreference: values.dbPreference,
+    cloudProvider: values.cloudProvider,
+    constraints: values.notes ?? "",
   };
+
+  try {
+    GenerateSliceManager.setLoading(true);
+    GenerateSliceManager.setError(null);
+
+    const result = await generateArchitecture(payload).unwrap();
+
+    // ── Set all redux state in one shot ──
+    GenerateSliceManager.setResult(result);  // this sets result, sessionId, prompt, generatedAt, lastRequest, activeArchitectureType all at once
+
+    console.log("✅ Generation result:", result);
+    navigate("/editor");
+
+  } catch (err: any) {
+    const message =
+      err?.data?.message ?? err?.message ?? "Something went wrong. Please try again.";
+    GenerateSliceManager.setError(message);
+    console.error("❌ Generation failed:", err);
+  } finally {
+    GenerateSliceManager.setLoading(false);
+  }
+};
+  // Derive a user-friendly error message
+  const errorMessage = error
+    ? "status" in error
+      ? (error.data as any)?.message ?? "Something went wrong. Please try again."
+      : "Network error. Please check your connection."
+    : null;
 
   return (
     <div className="generate-container">
@@ -132,6 +166,13 @@ export const GenerateForm = () => {
           them side by side with interactive diagrams.
         </p>
       </header>
+
+      {/* ── API Error Banner ── */}
+      {errorMessage && (
+        <div className="error-banner">
+          {errorMessage}
+        </div>
+      )}
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -346,14 +387,23 @@ export const GenerateForm = () => {
 
           {/* ── Footer Actions ── */}
           <div className="actions-footer">
-            <Button type="submit" className="btn-primary-glow">
-              <Hexagon size={16} className="mr-2" />
-              Generate all architectures
+            <Button type="submit" className="btn-primary-glow" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <span className="loading-spinner" /> Generating...
+                </>
+              ) : (
+                <>
+                  <Hexagon size={16} className="mr-2" />
+                  Generate all architectures
+                </>
+              )}
             </Button>
             <Button
               type="button"
               variant="ghost"
               className="btn-secondary-dark"
+              disabled={isLoading}
               onClick={() => window.location.reload()}
             >
               Cancel
