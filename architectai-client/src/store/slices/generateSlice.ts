@@ -14,6 +14,7 @@ const initialState: GenerateState = {
   generatedAt: null,
   lastRequest: null,
   activeArchitectureType: null,
+  architectures: []
 };
 
 const generateSlice = createSlice({

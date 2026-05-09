@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/form";
 import { useGenerateArchitectureMutation } from "@/store/api/generateApi";
 import { useNavigate } from "react-router-dom";
-import { GenerateSliceManager } from "@/store/sliceManager/generateSliceManager";
+import useGenerateSliceManager from "@/store/sliceManager/generateSliceManager";
 
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -101,6 +101,8 @@ export const GenerateForm = () => {
   const navigate = useNavigate();;
   const [generateArchitecture, { isLoading, error }] = useGenerateArchitectureMutation();
 
+  const {setError, setLoading, setResult} = useGenerateSliceManager();
+
   const form = useForm<GenerateFormValues, unknown, GenerateFormValues>({
     resolver: zodResolver(generateFormSchema) as any,
     defaultValues: {
@@ -126,13 +128,13 @@ const onSubmit = async (values: GenerateFormValues) => {
   };
 
   try {
-    GenerateSliceManager.setLoading(true);
-    GenerateSliceManager.setError(null);
+    setLoading(true);
+    setError(null);
 
     const result = await generateArchitecture(payload).unwrap();
 
     // ── Set all redux state in one shot ──
-    GenerateSliceManager.setResult(result);  // this sets result, sessionId, prompt, generatedAt, lastRequest, activeArchitectureType all at once
+    setResult(result);  // this sets result, sessionId, prompt, generatedAt, lastRequest, activeArchitectureType all at once
 
     console.log("✅ Generation result:", result);
     navigate("/editor");
@@ -140,10 +142,10 @@ const onSubmit = async (values: GenerateFormValues) => {
   } catch (err: any) {
     const message =
       err?.data?.message ?? err?.message ?? "Something went wrong. Please try again.";
-    GenerateSliceManager.setError(message);
+    setError(message);
     console.error("❌ Generation failed:", err);
   } finally {
-    GenerateSliceManager.setLoading(false);
+    setLoading(false);
   }
 };
   // Derive a user-friendly error message

@@ -79,6 +79,8 @@ export interface GenerateState {
   // Last submitted request — useful to prefill form again or show request summary
   lastRequest: GeneratePayload | null;
 
+  architectures: Architecture[];
+
   // Which architecture tab is active on the results page
   activeArchitectureType: string | null;
 }
