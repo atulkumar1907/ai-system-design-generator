@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { GeneratePayload, GenerateResult } from "../types/generateSlice";
+import type { GeneratePayload, GenerateResult, GenerateResponse } from "../types/generateSlice";
 
 export const generateApi = createApi({
   reducerPath: "generateApi",
@@ -11,8 +11,20 @@ export const generateApi = createApi({
         method: "POST",
         body: payload,
       }),
+      transformResponse: (response: { success: boolean; data: GenerateResult }) =>
+        response.data,
+    }),
+
+    saveDiagram: builder.mutation<{ id: string }, GenerateResponse>({
+      query: (payload) => ({
+        url: "/diagrams",
+        method: "POST",
+        body: payload,
+      }),
+      transformResponse: (response: { success: boolean; data: { id: string } }) =>
+        response.data,
     }),
   }),
 });
 
-export const { useGenerateArchitectureMutation } = generateApi;
+export const { useGenerateArchitectureMutation, useSaveDiagramMutation } = generateApi;

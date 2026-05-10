@@ -36,9 +36,9 @@ const ARCHITECTURE_OPTIONS = [
 ] as const;
 
 const SCALE_OPTIONS = [
-  { value: "low",        label: "Low (<10k users)" },
-  { value: "medium",     label: "Medium (10k-1M users)" },
-  { value: "high",       label: "High (1M-100M users)" },
+  { value: "low", label: "Low (<10k users)" },
+  { value: "medium", label: "Medium (10k-1M users)" },
+  { value: "high", label: "High (1M-100M users)" },
   { value: "hyperscale", label: "Hyper-scale (100M+)" },
 ] as const;
 
@@ -88,11 +88,11 @@ const architectureOptions: {
   title: (typeof ARCHITECTURE_OPTIONS)[number];
   desc: string;
 }[] = [
-  { title: "Microservices", desc: "Independent deployable services" },
-  { title: "Monolith",      desc: "Single deployable unit" },
-  { title: "Serverless",    desc: "Function-as-a-service" },
-  { title: "Event-driven",  desc: "Async message passing" },
-];
+    { title: "Microservices", desc: "Independent deployable services" },
+    { title: "Monolith", desc: "Single deployable unit" },
+    { title: "Serverless", desc: "Function-as-a-service" },
+    { title: "Event-driven", desc: "Async message passing" },
+  ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -101,7 +101,7 @@ export const GenerateForm = () => {
   const navigate = useNavigate();;
   const [generateArchitecture, { isLoading, error }] = useGenerateArchitectureMutation();
 
-  const {setError, setLoading, setResult} = useGenerateSliceManager();
+  const { setError, setLoading, setResult } = useGenerateSliceManager();
 
   const form = useForm<GenerateFormValues, unknown, GenerateFormValues>({
     resolver: zodResolver(generateFormSchema) as any,
@@ -116,38 +116,40 @@ export const GenerateForm = () => {
     },
   });
 
-const onSubmit = async (values: GenerateFormValues) => {
-  const payload = {
-    prompt: values.description,
-    architectureTypes: values.architecturePatterns.map((p) => p.toLowerCase()),
-    scale: values.scale,
-    specialRequirements: values.specialRequirements ?? [],
-    dbPreference: values.dbPreference,
-    cloudProvider: values.cloudProvider,
-    constraints: values.notes ?? "",
+  const onSubmit = async (values: GenerateFormValues) => {
+    const payload = {
+      prompt: values.description,
+      architectureTypes: values.architecturePatterns.map((p) => p.toLowerCase()),
+      scale: values.scale,
+      specialRequirements: values.specialRequirements ?? [],
+      dbPreference: values.dbPreference,
+      cloudProvider: values.cloudProvider,
+      constraints: values.notes ?? "",
+    };
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      const result = await generateArchitecture(payload).unwrap();
+      console.log("🔍 keys:", Object.keys(result));
+      console.log("🔍 architectures:", result.architectures);
+
+      // ── Set all redux state in one shot ──
+      console.log("✅ Generation result:", result);
+      setResult(result);  // this sets result, sessionId, prompt, generatedAt, lastRequest, activeArchitectureType all at once
+
+      navigate("/editor");
+
+    } catch (err: any) {
+      const message =
+        err?.data?.message ?? err?.message ?? "Something went wrong. Please try again.";
+      setError(message);
+      console.error("❌ Generation failed:", err);
+    } finally {
+      setLoading(false);
+    }
   };
-
-  try {
-    setLoading(true);
-    setError(null);
-
-    const result = await generateArchitecture(payload).unwrap();
-
-    // ── Set all redux state in one shot ──
-    setResult(result);  // this sets result, sessionId, prompt, generatedAt, lastRequest, activeArchitectureType all at once
-
-    console.log("✅ Generation result:", result);
-    navigate("/editor");
-
-  } catch (err: any) {
-    const message =
-      err?.data?.message ?? err?.message ?? "Something went wrong. Please try again.";
-    setError(message);
-    console.error("❌ Generation failed:", err);
-  } finally {
-    setLoading(false);
-  }
-};
   // Derive a user-friendly error message
   const errorMessage = error
     ? "status" in error
@@ -323,9 +325,9 @@ const onSubmit = async (values: GenerateFormValues) => {
                           </FormControl>
                           <SelectContent position="popper" className="select-dropdown-content">
                             <SelectItem value="no-preference" className="select-item">No preference</SelectItem>
-                            <SelectItem value="postgresql"    className="select-item">SQL (PostgreSQL, MySQL)</SelectItem>
-                            <SelectItem value="mongodb"       className="select-item">NoSQL (MongoDB, Cassandra)</SelectItem>
-                            <SelectItem value="dynamodb"      className="select-item">DynamoDB</SelectItem>
+                            <SelectItem value="postgresql" className="select-item">SQL (PostgreSQL, MySQL)</SelectItem>
+                            <SelectItem value="mongodb" className="select-item">NoSQL (MongoDB, Cassandra)</SelectItem>
+                            <SelectItem value="dynamodb" className="select-item">DynamoDB</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -350,9 +352,9 @@ const onSubmit = async (values: GenerateFormValues) => {
                           </FormControl>
                           <SelectContent position="popper" className="select-dropdown-content">
                             <SelectItem value="cloud-agnostic" className="select-item">Cloud agnostic</SelectItem>
-                            <SelectItem value="aws"            className="select-item">AWS</SelectItem>
-                            <SelectItem value="gcp"            className="select-item">GCP</SelectItem>
-                            <SelectItem value="azure"          className="select-item">Azure</SelectItem>
+                            <SelectItem value="aws" className="select-item">AWS</SelectItem>
+                            <SelectItem value="gcp" className="select-item">GCP</SelectItem>
+                            <SelectItem value="azure" className="select-item">Azure</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />

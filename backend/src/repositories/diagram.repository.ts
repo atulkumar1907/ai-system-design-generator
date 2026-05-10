@@ -1,7 +1,8 @@
 import Diagram from "../models/diagram.model";
 
-export const createDiagram = (data: any) => {
-  return Diagram.create(data);
+/** Insert one document per architecture in a single round-trip */
+export const createDiagrams = (docs: any[]) => {
+  return Diagram.insertMany(docs);
 };
 
 export const getDiagramById = (id: string) => {
